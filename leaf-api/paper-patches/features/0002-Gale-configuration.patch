@@ -13,10 +13,10 @@ As part of: Paper (https://github.com/PaperMC/Paper)
 Licensed under: MIT (https://opensource.org/licenses/MIT)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 9bab00ab10c78908090c8a1a12d4c84e9324b08b..544791edbd13d4ee711d22e6c8ef48329944e99c 100644
+index 964b57bb240151ddf4f11c203b67e8be6469e473..50fdb3f378be4301a321e9735870dc5d579d763c 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2385,6 +2385,21 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2422,6 +2422,21 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          {
              throw new UnsupportedOperationException("Not supported yet.");
          }
