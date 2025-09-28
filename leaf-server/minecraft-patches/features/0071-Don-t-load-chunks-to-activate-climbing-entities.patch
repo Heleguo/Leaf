@@ -7,10 +7,10 @@ License: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 Gale - https://galemc.org
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index c845bea5d31296efa03d07e5133e988ef3c57808..515bc3de097bf9edda42584e56fa173727455b5a 100644
+index faacc8b73cb0a06c797abe461fbfacfebe95648f..a58dd6d8e69736163b7099d66b0ebcb1a4a9e527 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4873,6 +4873,16 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4938,6 +4938,16 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
          return this.inBlockState;
      }
  
@@ -28,10 +28,10 @@ index c845bea5d31296efa03d07e5133e988ef3c57808..515bc3de097bf9edda42584e56fa1737
          return this.chunkPosition;
      }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 55277151febdf464e0a4679336a1464d3e4069b8..d54c09c48edbfc999abd834b68ea5ceea13f39d2 100644
+index 39b3b17dd9cafa59393d40bf0090edeadacde428..3c972e39a66c1aa9253eaae818eab6feac94c66d 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -2129,8 +2129,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -2161,8 +2161,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      public boolean onClimbableCached() {
          if (!this.blockPosition().equals(this.lastClimbingPosition)) {
@@ -51,7 +51,7 @@ index 55277151febdf464e0a4679336a1464d3e4069b8..d54c09c48edbfc999abd834b68ea5cee
          }
  
          return this.cachedOnClimbable;
-@@ -2138,11 +2147,25 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -2170,11 +2179,25 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      // Gale end - Airplane - cache on climbable check
  
      public boolean onClimbable() {

@@ -41,10 +41,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 38266ae67c440e94d30cd16ab09232906e1e8d7d..e7e4262981bcbf75a5c6a76f4588c91de15bf975 100644
+index f58799f368071b1a7bc3b5814261177c002d13f6..ab2c4451374916faf62bf3859b40cc513197de38 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -142,7 +142,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -235,7 +235,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          }
  
          // Paper start - detect running as root

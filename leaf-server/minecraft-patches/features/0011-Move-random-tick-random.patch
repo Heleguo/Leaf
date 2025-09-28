@@ -19,10 +19,10 @@ require it to be initialized earlier. By moving it to the superclass, we
 initialize it earlier, ensuring that it is available sooner.
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 1413511500ce8ae25cc4af1d54fc33c8912c24bc..0665c2ec275086b8c555c550af93dfef197fba07 100644
+index 2a8d613a2c041ea1ed034d66b20955845a4c0255..d02ffa4ed99e44bdaa07bd1d7c7465007f667d3a 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -834,8 +834,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -864,8 +864,6 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      }
  
      // Paper start - optimise random ticking
@@ -32,10 +32,10 @@ index 1413511500ce8ae25cc4af1d54fc33c8912c24bc..0665c2ec275086b8c555c550af93dfef
          final LevelChunkSection[] sections = chunk.getSections();
          final int minSection = ca.spottedleaf.moonrise.common.util.WorldUtil.getMinSection((ServerLevel)(Object)this);
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 9f630dda781dd540ab5655bd7ce916949eeee61c..19a9b37bad1d465440047cbde9a00b12ba5d9a4b 100644
+index 406f5f758370d3d53dcd32c1abc65d2851d2235e..9b6d21735c10d89b618c6ae4632e6b9ad34dc735 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -168,6 +168,7 @@ public abstract class Level implements LevelAccessor, UUIDLookup<Entity>, AutoCl
+@@ -174,6 +174,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      private int tileTickPosition;
      public final Map<ServerExplosion.CacheKey, Float> explosionDensityCache = new java.util.HashMap<>(); // Paper - Optimize explosions
      public java.util.ArrayDeque<net.minecraft.world.level.block.RedstoneTorchBlock.Toggle> redstoneUpdateInfos; // Paper - Faster redstone torch rapid clock removal; Move from Map in BlockRedstoneTorch to here

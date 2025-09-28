@@ -9,10 +9,10 @@ Gale - https://galemc.org
 The JMH benchmark of this patch can be found in SunBox's `FasterFloatingPointPositiveModulo`
 
 diff --git a/net/minecraft/util/Mth.java b/net/minecraft/util/Mth.java
-index 75da3011058918e1da6936522f19a2ccdb843d73..1b60fa34e4d6a5c00a983bf94e4d16d1eb46c665 100644
+index 65ad3ea9439fed47766ec7576760380d259ddfe5..3cd7364363863bde9f7a89a5830d7cf80f2a045d 100644
 --- a/net/minecraft/util/Mth.java
 +++ b/net/minecraft/util/Mth.java
-@@ -149,14 +149,26 @@ public class Mth {
+@@ -154,14 +154,26 @@ public class Mth {
          return Math.floorMod(x, y);
      }
  
@@ -42,10 +42,10 @@ index 75da3011058918e1da6936522f19a2ccdb843d73..1b60fa34e4d6a5c00a983bf94e4d16d1
          return number % multiple == 0;
      }
 diff --git a/net/minecraft/world/level/levelgen/blending/Blender.java b/net/minecraft/world/level/levelgen/blending/Blender.java
-index 01e5b29d6e9a5c53c0e23b61ed0c1d7be1a0fe08..314a189e2099e3688fd23e7100120abea6886ccd 100644
+index 78c77a25c0e81496336611d6999cc0da05094ca2..c3edcedcc87f474cc1d40fcea23047662fce9739 100644
 --- a/net/minecraft/world/level/levelgen/blending/Blender.java
 +++ b/net/minecraft/world/level/levelgen/blending/Blender.java
-@@ -144,7 +144,7 @@ public class Blender {
+@@ -149,7 +149,7 @@ public class Blender {
      private static double heightToOffset(double height) {
          double d = 1.0;
          double d1 = height + 0.5;

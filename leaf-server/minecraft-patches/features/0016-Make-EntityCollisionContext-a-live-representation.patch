@@ -40,28 +40,29 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 diff --git a/net/minecraft/world/phys/shapes/EntityCollisionContext.java b/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-index ebc9360ea64a248418fcac8b446664b0dd019335..b09d1b7c76410580663f2419e3b5e917fedabd54 100644
+index a2467db9f096368810e3c1ab8ddabf610fa38379..59edec180a3f2aa4665e380651b213bcd0d45cba 100644
 --- a/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 +++ b/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-@@ -19,27 +19,39 @@ public class EntityCollisionContext implements CollisionContext {
-             return canAscend;
-         }
-     };
+@@ -12,27 +12,41 @@ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.material.FluidState;
+ 
+ public class EntityCollisionContext implements CollisionContext {
 +    // Gale start - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
 +    /*
      private final boolean descending;
      private final double entityBottom;
      private final boolean placement;
      private final ItemStack heldItem;
-     private final Predicate<FluidState> canStandOnFluid;
+     private final boolean alwaysCollideWithFluid;
 +    */
-+    // Gale end - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
 +    private final boolean placement;
++    private final boolean alwaysCollideWithFluid;
++    // Gale end - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
      @Nullable
      private final Entity entity;
  
      protected EntityCollisionContext(
-         boolean descending, boolean placement, double entityBottom, ItemStack heldItem, Predicate<FluidState> canStandOnFluid, @Nullable Entity entity
+         boolean descending, boolean placement, double entityBottom, ItemStack heldItem, boolean alwaysCollideWithFluid, @Nullable Entity entity
      ) {
 +        // Gale start - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
 +        /*
@@ -69,10 +70,11 @@ index ebc9360ea64a248418fcac8b446664b0dd019335..b09d1b7c76410580663f2419e3b5e917
          this.placement = placement;
          this.entityBottom = entityBottom;
          this.heldItem = heldItem;
-         this.canStandOnFluid = canStandOnFluid;
+         this.alwaysCollideWithFluid = alwaysCollideWithFluid;
 +        */
-+        // Gale end - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
 +        this.placement = placement;
++        this.alwaysCollideWithFluid = alwaysCollideWithFluid;
++        // Gale end - Airplane - make EntityCollisionContext a live representation - remove these and pray no plugin uses them
          this.entity = entity;
      }
  
@@ -83,12 +85,13 @@ index ebc9360ea64a248418fcac8b446664b0dd019335..b09d1b7c76410580663f2419e3b5e917
          this(
              entity.isDescending(),
              placement,
-@@ -50,16 +62,20 @@ public class EntityCollisionContext implements CollisionContext {
-                 : (entity instanceof LivingEntity livingEntity ? fluidState -> livingEntity.canStandOnFluid(fluidState) : fluidState -> false),
+@@ -41,11 +55,16 @@ public class EntityCollisionContext implements CollisionContext {
+             canStandOnFluid,
              entity
          );
 +        */
 +        this.placement = placement;
++        this.alwaysCollideWithFluid = canStandOnFluid;
 +        this.entity = entity;
 +        // Gale end - Airplane - make EntityCollisionContext a live representation - remove unneeded things
      }
@@ -100,13 +103,7 @@ index ebc9360ea64a248418fcac8b446664b0dd019335..b09d1b7c76410580663f2419e3b5e917
      }
  
      @Override
-     public boolean canStandOnFluid(FluidState fluid1, FluidState fluid2) {
--        return this.canStandOnFluid.test(fluid2) && !fluid1.getType().isSame(fluid2.getType());
-+        return this.entity instanceof LivingEntity livingEntity && livingEntity.canStandOnFluid(fluid2) && !fluid1.getType().isSame(fluid2.getType()); // Gale - Airplane - make EntityCollisionContext a live representation
-     }
- 
-     @Override
-@@ -69,12 +85,12 @@ public class EntityCollisionContext implements CollisionContext {
+@@ -65,12 +84,12 @@ public class EntityCollisionContext implements CollisionContext {
  
      @Override
      public boolean isDescending() {

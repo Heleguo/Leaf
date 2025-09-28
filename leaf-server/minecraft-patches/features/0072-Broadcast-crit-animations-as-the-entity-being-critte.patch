@@ -13,26 +13,26 @@ As part of: MultiPaper (https://github.com/MultiPaper/MultiPaper)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index e4976eff4d18a1a1a752956c7e214122ddb05401..ee2671510d46a92732934cd5df0a0e42c4cae1f6 100644
+index 8f9ca82adea0c07fef37b3b800ddeebbe3d29c21..b5f666d69cf15fc81c6cc0e3f7030501567b205c 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -2128,12 +2128,18 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -2243,12 +2243,18 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
  
      @Override
      public void crit(Entity entityHit) {
--        this.level().getChunkSource().broadcastAndSend(this, new ClientboundAnimatePacket(entityHit, 4));
+-        this.level().getChunkSource().sendToTrackingPlayersAndSelf(this, new ClientboundAnimatePacket(entityHit, 4));
 +        // Gale start - MultiPaper - broadcast crit animations as the entity being critted
 +        var level = this.level();
-+        level.getChunkSource().broadcastAndSend(level.galeConfig().gameplayMechanics.fixes.broadcastCritAnimationsAsTheEntityBeingCritted ? entityHit : this, new ClientboundAnimatePacket(entityHit, 4));
++        level.getChunkSource().sendToTrackingPlayersAndSelf(level.galeConfig().gameplayMechanics.fixes.broadcastCritAnimationsAsTheEntityBeingCritted ? entityHit : this, new ClientboundAnimatePacket(entityHit, 4));
 +        // Gale end - MultiPaper - broadcast crit animations as the entity being critte
      }
  
      @Override
      public void magicCrit(Entity entityHit) {
--        this.level().getChunkSource().broadcastAndSend(this, new ClientboundAnimatePacket(entityHit, 5));
+-        this.level().getChunkSource().sendToTrackingPlayersAndSelf(this, new ClientboundAnimatePacket(entityHit, 5));
 +        // Gale start - MultiPaper - broadcast crit animations as the entity being critted
 +        var level = this.level();
-+        level.getChunkSource().broadcastAndSend(level.galeConfig().gameplayMechanics.fixes.broadcastCritAnimationsAsTheEntityBeingCritted ? entityHit : this, new ClientboundAnimatePacket(entityHit, 5));
++        level.getChunkSource().sendToTrackingPlayersAndSelf(level.galeConfig().gameplayMechanics.fixes.broadcastCritAnimationsAsTheEntityBeingCritted ? entityHit : this, new ClientboundAnimatePacket(entityHit, 5));
 +        // Gale end - MultiPaper - broadcast crit animations as the entity being critted
      }
  

@@ -13,10 +13,10 @@ As part of: Lithium (https://github.com/CaffeineMC/lithium)
 Licensed under: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.html)
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 82354cc62df5b7793ef13c6731d84457cee42092..55277151febdf464e0a4679336a1464d3e4069b8 100644
+index c4bda5d975cce38a725b8590261d97fcfac3d95d..39b3b17dd9cafa59393d40bf0090edeadacde428 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -535,10 +535,9 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -542,10 +542,9 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      }
  
      protected void tryAddFrost() {
@@ -28,7 +28,7 @@ index 82354cc62df5b7793ef13c6731d84457cee42092..55277151febdf464e0a4679336a1464d
                  if (attribute == null) {
                      return;
                  }
-@@ -546,7 +545,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -553,7 +552,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
                  float f = -0.05F * this.getPercentFrozen();
                  attribute.addTransientModifier(new AttributeModifier(SPEED_MODIFIER_POWDER_SNOW_ID, f, AttributeModifier.Operation.ADD_VALUE));
              }

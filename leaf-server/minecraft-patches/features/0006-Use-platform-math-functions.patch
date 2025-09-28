@@ -99,7 +99,7 @@ public class Main {
 ```
 
 diff --git a/net/minecraft/util/Mth.java b/net/minecraft/util/Mth.java
-index ab3a221c115992d0f4ea921aa92cf0976b815ff4..75da3011058918e1da6936522f19a2ccdb843d73 100644
+index 0713d164851216483247da09ff7901f8bfbe2eb9..65ad3ea9439fed47766ec7576760380d259ddfe5 100644
 --- a/net/minecraft/util/Mth.java
 +++ b/net/minecraft/util/Mth.java
 @@ -58,18 +58,15 @@ public class Mth {
@@ -139,21 +139,4 @@ index ab3a221c115992d0f4ea921aa92cf0976b815ff4..75da3011058918e1da6936522f19a2cc
 +        return (int) Math.ceil(value); // Gale - use platform math functions
      }
  
-     public static int clamp(int value, int min, int max) {
-@@ -123,15 +118,7 @@ public class Mth {
-     }
- 
-     public static double absMax(double x, double y) {
--        if (x < 0.0) {
--            x = -x;
--        }
--
--        if (y < 0.0) {
--            y = -y;
--        }
--
--        return Math.max(x, y);
-+        return Math.max(Math.abs(x), Math.abs(y)); // Gale - use platform math functions
-     }
- 
-     public static int floorDiv(int dividend, int divisor) {
+     public static long ceilLong(double value) {

@@ -17,10 +17,10 @@ Licensed under: MIT (https://opensource.org/licenses/MIT)
 Only do an item "suck in" action once per second
 
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index 51804b611f469f2ab53e455e8c633b867b00cc88..fcb1f6806908eb66592dc52f2b57286498cf7032 100644
+index e9a7630b7f2a4b49e2794fcd64dc19b7002d27a1..8b176f5783d810b41a37db09b328992157986099 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
-@@ -148,7 +148,13 @@ public class ItemEntity extends Entity implements TraceableEntity {
+@@ -139,7 +139,13 @@ public class ItemEntity extends Entity implements TraceableEntity {
              }
              // CraftBukkit end
              this.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DESPAWN); // CraftBukkit - add Bukkit remove cause
@@ -34,7 +34,7 @@ index 51804b611f469f2ab53e455e8c633b867b00cc88..fcb1f6806908eb66592dc52f2b572864
      }
      // Paper end - EAR 2
  
-@@ -232,9 +238,31 @@ public class ItemEntity extends Entity implements TraceableEntity {
+@@ -223,9 +229,31 @@ public class ItemEntity extends Entity implements TraceableEntity {
                  }
                  // CraftBukkit end
                  this.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DESPAWN); // CraftBukkit - add Bukkit remove cause
@@ -67,7 +67,7 @@ index 51804b611f469f2ab53e455e8c633b867b00cc88..fcb1f6806908eb66592dc52f2b572864
      @Override
      public BlockPos getBlockPosBelowThatAffectsMyMovement() {
 diff --git a/net/minecraft/world/entity/vehicle/MinecartHopper.java b/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index 41a6ec508a10a49a37539d2f10171d15c233b280..fb099517927f3c2699a348ea7692772c5420b8d1 100644
+index 99e7fad89a55909e345e15b3bec0b10471a72f22..a0928f913ec3863198d09f09b65119f7702852e6 100644
 --- a/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -23,6 +23,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
@@ -105,10 +105,10 @@ index 484c2ba2752fbf3ad929e46c2f078e906f6f0637..6ced5a7e27703a7cf5a7495dc3a1a290
  
      double getLevelY();
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 01ed25d1f895d94485b5fecd98476534cbb26930..c1fcd9e0ab47332ce48e391c6cd1455960340df3 100644
+index 28348e3881c3c8591053a01b193fb2a956f79726..737344e0ca9babd4aaafb6c162eb44df920fac98 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -544,7 +544,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -545,7 +545,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              return false;
          } else {
              boolean flag = hopper.isGridAligned() && blockState.isCollisionShapeFullBlock(level, blockPos) && !blockState.is(BlockTags.DOES_NOT_BLOCK_HOPPERS);
@@ -117,7 +117,7 @@ index 01ed25d1f895d94485b5fecd98476534cbb26930..c1fcd9e0ab47332ce48e391c6cd14559
                  for (ItemEntity itemEntity : getItemsAtAndAbove(level, hopper)) {
                      if (addItem(hopper, itemEntity)) {
                          return true;
-@@ -822,6 +822,34 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -823,6 +823,34 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          return stack1.getCount() < stack1.getMaxStackSize() && ItemStack.isSameItemSameComponents(stack1, stack2); // Paper - Perf: Optimize Hoppers; used to return true for full itemstacks?!
      }
  

@@ -13,10 +13,10 @@ As part of: Pufferfish (https://github.com/pufferfish-gg/Pufferfish)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index b63f1b27c60faf90b3d991b9a88b0642afa29a93..38266ae67c440e94d30cd16ab09232906e1e8d7d 100644
+index 1e8aec79decfe160e8c19b907f1441637b2832be..f58799f368071b1a7bc3b5814261177c002d13f6 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -190,6 +190,13 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -283,6 +283,13 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          com.destroystokyo.paper.Metrics.PaperMetrics.startMetrics(); // Paper - start metrics
          com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // Paper - load version history now
  
@@ -27,6 +27,6 @@ index b63f1b27c60faf90b3d991b9a88b0642afa29a93..38266ae67c440e94d30cd16ab0923290
 +        } catch (Throwable ignored) {}
 +        // Gale end - Pufferfish - SIMD support
 +
-         this.setPvpAllowed(properties.pvp);
-         this.setFlightAllowed(properties.allowFlight);
-         this.setMotd(properties.motd);
+         // this.worldData.setGameType(properties.gameMode.get()); // CraftBukkit - moved to world loading
+         LOGGER.info("Default game type: {}", properties.gameMode.get());
+         // Paper start - Unix domain socket support

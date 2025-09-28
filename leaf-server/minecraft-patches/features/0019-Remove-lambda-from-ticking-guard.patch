@@ -33,10 +33,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 6bc70c1d53049a1f75268ab9944bfb1557ca74ee..a9c2f419200483673f6743ed94af110a8e875e71 100644
+index 413bc3ccd89cbf04b52c5e60fec2880f5ea72e32..24f3954645dfd5142de2f2ae964ba5caf12582ac 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -788,7 +788,19 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -809,7 +809,19 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                                          entity.stopRiding();
                                      }
  
@@ -58,10 +58,10 @@ index 6bc70c1d53049a1f75268ab9944bfb1557ca74ee..a9c2f419200483673f6743ed94af110a
                              }
                          }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index a4c915c8fdd167bfa2c5ef20c5ec7acc53c89726..a0254e85fccebb66ce02bd58f9d461addd8ad73d 100644
+index 9b6d21735c10d89b618c6ae4632e6b9ad34dc735..e49d7bc1b060ee3922bb171ba0e7723148c601df 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -1489,10 +1489,10 @@ public abstract class Level implements LevelAccessor, UUIDLookup<Entity>, AutoCl
+@@ -1443,10 +1443,10 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
              final String msg = String.format("Entity threw exception at %s:%s,%s,%s", entity.level().getWorld().getName(), entity.getX(), entity.getY(), entity.getZ());
              MinecraftServer.LOGGER.error(msg, var6);
              getCraftServer().getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerInternalException(msg, var6))); // Paper - ServerExceptionEvent

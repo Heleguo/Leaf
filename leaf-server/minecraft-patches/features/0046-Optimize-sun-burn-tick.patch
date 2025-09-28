@@ -13,10 +13,10 @@ As part of: JettPack (https://gitlab.com/Titaniumtown/JettPack)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index e81774a2fbcafb5909b966f71d31379c8b5a7426..229daac5767e8d65b2d0c37303d3490ef97e21ff 100644
+index 13ffe66a5161188c253f71c6ed5264261d886b74..508eb961b14564d46b420f1f40ac2fd13a121884 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -2087,10 +2087,20 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -2139,10 +2139,20 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
  
      @Deprecated
      public float getLightLevelDependentMagicValue() {
@@ -39,10 +39,10 @@ index e81774a2fbcafb5909b966f71d31379c8b5a7426..229daac5767e8d65b2d0c37303d3490e
      public void absSnapTo(double x, double y, double z, float yRot, float xRot) {
          this.absSnapTo(x, y, z);
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 4aec1fd4efbb3dd139542c55d06503716723f326..37c6567701fe10011a364b8def9ebf3391376592 100644
+index 65a406b6684117d2379033ce09808543303ef374..fc6c5cf5991d9d359fd9e4ebb0f71a18c52e6273 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -1513,20 +1513,31 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
+@@ -1532,20 +1532,31 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
      protected void playAttackSound() {
      }
  
@@ -51,7 +51,7 @@ index 4aec1fd4efbb3dd139542c55d06503716723f326..37c6567701fe10011a364b8def9ebf33
 +    private net.minecraft.world.phys.Vec3 cached_position;
 +    // Gale end - JettPack - optimize sun burn tick - cache eye blockpos
      public boolean isSunBurnTick() {
-         if (this.level().isBrightOutside() && !this.level().isClientSide) {
+         if (this.level().isBrightOutside() && !this.level().isClientSide()) {
 -            float lightLevelDependentMagicValue = this.getLightLevelDependentMagicValue();
 -            BlockPos blockPos = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 -            boolean flag = this.isInWaterOrRain() || this.isInPowderSnow || this.wasInPowderSnow;

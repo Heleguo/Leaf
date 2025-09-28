@@ -13,24 +13,24 @@ As part of: EmpireCraft (https://github.com/starlis/empirecraft)
 Licensed under: MIT (https://opensource.org/licenses/MIT)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 822691293834c4da31adb2573fbc87467db2daa5..917908e69154c5c5c9f847ae47548ee3d9221bc2 100644
+index 2edec1f0a6b456959139f897c41d96af55365156..636f9ae7320a9f4a06459b2e8682099f309fa3f7 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -424,6 +424,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -437,6 +437,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean sentListPacket = false;
-     public boolean supressTrackerForLogin = false; // Paper - Fire PlayerJoinEvent when Player is actually ready
+     public boolean suppressTrackerForLogin = false; // Paper - Fire PlayerJoinEvent when Player is actually ready
      // CraftBukkit end
 +    public boolean didPlayerJoinEvent = false; // Gale - EMC - do not process chat/commands before player has joined
      public boolean isRealPlayer; // Paper
      public @Nullable com.destroystokyo.paper.event.entity.PlayerNaturallySpawnCreaturesEvent playerNaturallySpawnedEvent; // Paper - PlayerNaturallySpawnCreaturesEvent
      public @Nullable org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - Add API for quit reason; there are a lot of changes to do if we change all methods leading to the event
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 81d6bad5ef230de7852c79a607eb2f5aa32768da..08c0b02e8f70dfc349da2b534435b5f09f99e2b8 100644
+index 8a4256925045f70990805c4bef1e5f8de2beea37..e318003a58db37d5d278e7f6a35f6a2983d3e673 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2443,7 +2443,7 @@ public class ServerGamePacketListenerImpl
+@@ -2450,7 +2450,7 @@ public class ServerGamePacketListenerImpl
              this.disconnectAsync(Component.translatable("multiplayer.disconnect.illegal_characters"), org.bukkit.event.player.PlayerKickEvent.Cause.ILLEGAL_CHARACTERS); // Paper - add proper async disconnect
-         } else if (this.player.isRemoved() || this.player.getChatVisibility() == ChatVisiblity.HIDDEN) { // CraftBukkit - dead men tell no tales
+         } else if (this.player.isRemoved() || (!bypassHiddenChat && this.player.getChatVisibility() == ChatVisiblity.HIDDEN)) { // CraftBukkit - dead men tell no tales
              this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), false));
 -        } else {
 +        } else if (player.didPlayerJoinEvent) { // Gale - EMC - do not process chat/commands before player has joined
@@ -38,15 +38,15 @@ index 81d6bad5ef230de7852c79a607eb2f5aa32768da..08c0b02e8f70dfc349da2b534435b5f0
              // CraftBukkit start
              if (sync) {
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 33b1a6fdf169001093642cc8200d2789e80692b0..c0129b6e5c74a5412546c167fb03b705686c996f 100644
+index cacd56bfe256f34b3d9211fea8bd9c933fad11cb..0ed0e3db7909fe0a24a405ab96cc5e3067eb011c 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -335,6 +335,8 @@ public abstract class PlayerList {
-                 return;
-             }
+@@ -238,6 +238,8 @@ public abstract class PlayerList {
+             return;
+         }
  
-+            player.didPlayerJoinEvent = true; // Gale - EMC - do not process chat/commands before player has joined
++        player.didPlayerJoinEvent = true; // Gale - EMC - do not process chat/commands before player has joined
 +
-             final net.kyori.adventure.text.Component jm = playerJoinEvent.joinMessage();
+         final net.kyori.adventure.text.Component jm = playerJoinEvent.joinMessage();
  
-             if (jm != null && !jm.equals(net.kyori.adventure.text.Component.empty())) { // Paper - Adventure
+         if (jm != null && !jm.equals(net.kyori.adventure.text.Component.empty())) { // Paper - Adventure

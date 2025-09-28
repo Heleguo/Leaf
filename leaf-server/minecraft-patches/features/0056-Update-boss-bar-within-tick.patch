@@ -13,10 +13,10 @@ As part of: Lithium (https://github.com/CaffeineMC/lithium)
 Licensed under: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.html)
 
 diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index b3a29ce523fb5de71589c7c17598bba17622f988..afcf185c4e2c0648c96a872fbe1fbebb6012d513 100644
+index 5181a9334066a15e0d502d3522c23337e5eef2b5..dcfade2efe209b87a169738fc2ff23d8e24b53a6 100644
 --- a/net/minecraft/world/entity/raid/Raid.java
 +++ b/net/minecraft/world/entity/raid/Raid.java
-@@ -126,6 +126,7 @@ public class Raid {
+@@ -128,6 +128,7 @@ public class Raid {
      private Raid.RaidStatus status;
      private int celebrationTicks;
      private Optional<BlockPos> waveSpawnPos = Optional.empty();
@@ -24,7 +24,7 @@ index b3a29ce523fb5de71589c7c17598bba17622f988..afcf185c4e2c0648c96a872fbe1fbebb
  
      public Raid(BlockPos center, Difficulty difficulty) {
          this.active = true;
-@@ -278,6 +279,12 @@ public class Raid {
+@@ -280,6 +281,12 @@ public class Raid {
      }
  
      public void tick(ServerLevel level) {
@@ -37,7 +37,7 @@ index b3a29ce523fb5de71589c7c17598bba17622f988..afcf185c4e2c0648c96a872fbe1fbebb
          if (!this.isStopped()) {
              if (this.status == Raid.RaidStatus.ONGOING) {
                  boolean flag = this.active;
-@@ -588,6 +595,12 @@ public class Raid {
+@@ -610,6 +617,12 @@ public class Raid {
      }
  
      public void updateBossbar() {

@@ -10,7 +10,9 @@
 </div>
 
 > [!WARNING]
-> Leaf is a performance-oriented fork. Make sure to take backups **before** switching to it. Everyone is welcome to contribute optimizations or report issues to help us improve.
+> Current Leaf 1.21.9 is a temp branch which is isolated from the 1.21.8 branch. \
+> Update Paper upstream will be done every month, and will not receive fixes from Leaf 1.21.8, until Leaf 1.21.8 becomes stable again. \
+> It's only for people want to try or test 1.21.9, **DO NOT** use in production!
 
 **English** | [中文](public/readme/README_CN.md)
 

@@ -9,10 +9,10 @@ Gale - https://galemc.org
 The JMH benchmark of this patch can be found in SunBox's `RecordHashCode`
 
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index be6f37f91569c659c609e5e8d38671ca86f8cd95..cc5e4e82c2339d17edf76b9212774c9dfd8e514d 100644
+index 4fd746ccfd0018f5e551490e24aa68265d609295..3b89a899a191f8b3f3d8643d11bf9468b2592897 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
-@@ -610,7 +610,20 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -649,7 +649,20 @@ public class Block extends BlockBehaviour implements ItemLike {
      }
      // CraftBukkit end
  
@@ -34,7 +34,7 @@ index be6f37f91569c659c609e5e8d38671ca86f8cd95..cc5e4e82c2339d17edf76b9212774c9d
          @Override
          public boolean equals(Object other) {
              return other instanceof Block.ShapePairKey shapePairKey && this.first == shapePairKey.first && this.second == shapePairKey.second;
-@@ -618,7 +631,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -657,7 +670,7 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          @Override
          public int hashCode() {

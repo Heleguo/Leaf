@@ -13,20 +13,26 @@ As part of: JettPack (https://gitlab.com/Titaniumtown/JettPack)
 Licensed under: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 0509c3b79a01a18ddb1a6ed41c1668ee5d3c50e7..f4a73d3f56d6a10493752653bd50c8caeda63a94 100644
+index 31fd2ce06f173db7228e5addb6e3cf407df4cadc..2406f4d7debd0615ddfa40a307b29edac11451b7 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -403,7 +403,13 @@ public abstract class PlayerList {
-                 scoreboard.addPlayerToTeam(player.getScoreboardName(), collideRuleTeam);
-             }
-             // Paper end - Configurable player collision
-+            if (org.galemc.gale.configuration.GaleGlobalConfiguration.get().logToConsole.playerLoginLocations) { // Gale - JettPack - make logging login location configurable
-             PlayerList.LOGGER.info("{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", player.getName().getString(), loggableAddress, player.getId(), serverLevel.serverLevelData.getLevelName(), player.getX(), player.getY(), player.getZ());
-+                // Gale start - JettPack - make logging login location configurable
-+            } else {
-+                PlayerList.LOGGER.info("{}[{}] logged in with entity id {}", player.getName().getString(), loggableAddress, player.getId());
-+            }
-+            // Gale end - JettPack - make logging login location configurable
-             // Paper start - Send empty chunk, so players aren't stuck in the world loading screen with our chunk system not sending chunks when dead
-             if (player.isDeadOrDying()) {
-                 net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> plains = serverLevel.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
+@@ -306,6 +306,7 @@ public abstract class PlayerList {
+             scoreboard.addPlayerToTeam(player.getScoreboardName(), collideRuleTeam);
+         }
+         // Paper end - Configurable player collision
++        if (org.galemc.gale.configuration.GaleGlobalConfiguration.get().logToConsole.playerLoginLocations) { // Gale - JettPack - make logging login location configurable
+         // CraftBukkit start - moved down
+         LOGGER.info(
+             "{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", // CraftBukkit - add world name
+@@ -318,6 +319,11 @@ public abstract class PlayerList {
+             player.getZ()
+         );
+         // CraftBukkit end - moved down
++            // Gale start - JettPack - make logging login location configurable
++        } else {
++            PlayerList.LOGGER.info("{}[{}] logged in with entity id {}", player.getPlainTextName(), loggableAddress, player.getId());
++        }
++        // Gale end - JettPack - make logging login location configurable
+         // Paper start - Send empty chunk, so players aren't stuck in the world loading screen with our chunk system not sending chunks when dead
+         if (player.isDeadOrDying()) {
+             net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> plains = serverLevel.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
