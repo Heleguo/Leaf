@@ -7,13 +7,13 @@ Original license: MIT
 Original project: https://github.com/KeYiMC/KeYi
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index a40380fbafe1868c9fbb6623987c4f226e3f2150..32537a9a892b12258ae17c63c32e98e1b3902cb9 100644
+index 4eb7d90f38e744b51c11d334a44dacb0a9ac6956..ef9cb690b93fdd6b637a731658cfacfe9723c8c2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -3623,4 +3623,31 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
-         this.getHandle().connection.send(new net.minecraft.network.protocol.game.ClientboundPlayerCombatKillPacket(getEntityId(), io.papermc.paper.adventure.PaperAdventure.asVanilla(message)));
+@@ -3550,4 +3550,31 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+             entity.remove();
+         }
      }
-     // Purpur end - Death screen API
 +
 +    // Leaf start - KeYi - Player Skull API
 +    @Override

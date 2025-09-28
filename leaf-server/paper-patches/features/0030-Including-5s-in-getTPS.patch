@@ -5,10 +5,10 @@ Subject: [PATCH] Including 5s in getTPS()
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e1d81f91f166beec06aaa8739ea6b61703dc04dd..5a0253f402d31fa3312d0248edb6c7cd6cec6698 100644
+index 432df0b003a914f24521d4908cf0d97cf33d6b25..2eed074743a802fa66f4be8f38de0f2471e352d4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3078,6 +3078,8 @@ public final class CraftServer implements Server {
+@@ -2853,6 +2853,8 @@ public final class CraftServer implements Server {
  
      @Override
      public double[] getTPS() {

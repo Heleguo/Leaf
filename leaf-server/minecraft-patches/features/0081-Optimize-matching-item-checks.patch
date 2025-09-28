@@ -7,10 +7,10 @@ License: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 Gale - https://galemc.org
 
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 951c86278e8cb5cd801a5db2ebfabef8c6d813ef..6ceb6cf302bad28e453fa89ec16083b0e0c5c398 100644
+index 41aed4ca479c84337dbe368e1f752af498c5de24..e7a6310301de9c07666e4cf5cfe3ed2951213025 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -864,11 +864,11 @@ public final class ItemStack implements DataComponentHolder {
+@@ -865,11 +865,11 @@ public final class ItemStack implements DataComponentHolder {
      }
  
      public static boolean isSameItem(ItemStack stack, ItemStack other) {

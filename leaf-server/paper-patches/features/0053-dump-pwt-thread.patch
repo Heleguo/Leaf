@@ -5,7 +5,7 @@ Subject: [PATCH] dump pwt thread
 
 
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 79eae898539f71a73525ed29d8a752f65f5f67fa..e98279e78c9f5ddbd6dd0cdf48973453304b8e1c 100644
+index 3e8b43794dd3a57eafb4b9f2fc206ae60d3a0b82..c5ce5b1267c6605df8b5ded6c6893e33808b6755 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -124,6 +124,21 @@ public class WatchdogThread extends ca.spottedleaf.moonrise.common.util.TickThre

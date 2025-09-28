@@ -5,10 +5,10 @@ Subject: [PATCH] optimize mob spawning
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index dfafd3125438b6a74f15a749599acfd00918c50a..034d136bcaa894d8999fc51a53d66b40bb884ccd 100644
+index b78f6e56a993240fd2b329b64265c728631ca907..8c27cf7144ca27e6a4a5df0076cecb08a233afcf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -296,7 +296,8 @@ public final class CraftServer implements Server {
+@@ -285,7 +285,8 @@ public final class CraftServer implements Server {
      private final EntityMetadataStore entityMetadata = new EntityMetadataStore();
      private final PlayerMetadataStore playerMetadata = new PlayerMetadataStore();
      private final WorldMetadataStore worldMetadata = new WorldMetadataStore();
@@ -18,7 +18,7 @@ index dfafd3125438b6a74f15a749599acfd00918c50a..034d136bcaa894d8999fc51a53d66b40
      private File container;
      private WarningState warningState = WarningState.DEFAULT;
      public ApiVersion minimumAPI;
-@@ -497,6 +498,7 @@ public final class CraftServer implements Server {
+@@ -483,6 +484,7 @@ public final class CraftServer implements Server {
          this.saveCommandsConfig();
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
@@ -26,7 +26,7 @@ index dfafd3125438b6a74f15a749599acfd00918c50a..034d136bcaa894d8999fc51a53d66b40
          this.overrideSpawnLimits();
          console.autosavePeriod = this.configuration.getInt("ticks-per.autosave");
          this.warningState = WarningState.value(this.configuration.getString("settings.deprecated-verbose"));
-@@ -529,9 +531,9 @@ public final class CraftServer implements Server {
+@@ -514,9 +516,9 @@ public final class CraftServer implements Server {
      }
  
      private void overrideSpawnLimits() {
@@ -38,7 +38,7 @@ index dfafd3125438b6a74f15a749599acfd00918c50a..034d136bcaa894d8999fc51a53d66b40
              }
          }
      }
-@@ -2544,7 +2546,7 @@ public final class CraftServer implements Server {
+@@ -2384,7 +2386,7 @@ public final class CraftServer implements Server {
      }
  
      public int getSpawnLimitUnsafe(final SpawnCategory spawnCategory) {
@@ -48,12 +48,12 @@ index dfafd3125438b6a74f15a749599acfd00918c50a..034d136bcaa894d8999fc51a53d66b40
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ee5f342995a335593932a497c2bafd36d34cecb2..2523cd17ad4a3add3a9a420777dc49fe0658fe01 100644
+index 9df1110696fdd235b5664f8ddbf4a0ca74bd78e9..b32d80d07fc8542ea7b3a2c0db68618fce08e7d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -173,7 +173,8 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -174,7 +174,8 @@ public class CraftWorld extends CraftRegionAccessor implements World {
      private final @Nullable BiomeProvider biomeProvider;
-     private final List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
+     private final List<BlockPopulator> populators = new ArrayList<>();
      private final BlockMetadataStore blockMetadata = new BlockMetadataStore(this);
 -    private final Object2IntOpenHashMap<SpawnCategory> spawnCategoryLimit = new Object2IntOpenHashMap<>();
 +    private static final SpawnCategory[] SPAWN_CATEGORIES = SpawnCategory.values(); // Leaf - optimize mob spawning
@@ -61,7 +61,7 @@ index ee5f342995a335593932a497c2bafd36d34cecb2..2523cd17ad4a3add3a9a420777dc49fe
      private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(CraftWorld.DATA_TYPE_REGISTRY);
      // Paper start - void damage configuration
      private boolean voidDamageEnabled;
-@@ -303,8 +304,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -304,8 +305,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          this.biomeProvider = biomeProvider;
  
          this.environment = environment;
@@ -72,16 +72,16 @@ index ee5f342995a335593932a497c2bafd36d34cecb2..2523cd17ad4a3add3a9a420777dc49fe
              if (CraftSpawnCategory.isValidForLimits(spawnCategory)) {
                  setSpawnLimit(spawnCategory, this.world.paperConfig().entities.spawning.spawnLimits.getInt(CraftSpawnCategory.toNMS(spawnCategory)));
              }
-@@ -1868,7 +1870,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
-         return this.getSpawnLimitUnsafe(spawnCategory);
+@@ -1543,7 +1545,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
      }
+ 
      public final int getSpawnLimitUnsafe(final SpawnCategory spawnCategory) {
 -        int limit = this.spawnCategoryLimit.getOrDefault(spawnCategory, -1);
 +        int limit = this.spawnCategoryLimit[spawnCategory.ordinal()]; // Leaf - optimize mob spawning
          if (limit < 0) {
              limit = this.server.getSpawnLimitUnsafe(spawnCategory);
-             // Paper end - Add mobcaps commands
-@@ -1881,7 +1883,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+         }
+@@ -1555,7 +1557,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          Preconditions.checkArgument(spawnCategory != null, "SpawnCategory cannot be null");
          Preconditions.checkArgument(CraftSpawnCategory.isValidForLimits(spawnCategory), "SpawnCategory.%s are not supported", spawnCategory);
  

@@ -25,19 +25,19 @@ index 92a820d48057ffe2ef35919341b6cdf605ca939e..b9b1bf351070cd2a744cdb683974fb2a
              double d = center.x - maxRange;
              double d1 = center.y - maxRange;
              double d2 = center.x + maxRange;
-diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index ee2671510d46a92732934cd5df0a0e42c4cae1f6..f68b92a85b2223d22cb96ee0f8d588af5696b947 100644
---- a/net/minecraft/server/level/ServerPlayer.java
-+++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -496,7 +496,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
-             long l1 = l * l;
-             int i = l1 > 2147483647L ? Integer.MAX_VALUE : (int)l1;
-             int coprime = this.getCoprime(i);
--            int randomInt = RandomSource.create().nextInt(i);
-+            int randomInt = level.random.nextInt(i); // Gale - Patina - reduce RandomSource instances
+diff --git a/net/minecraft/server/level/PlayerSpawnFinder.java b/net/minecraft/server/level/PlayerSpawnFinder.java
+index 85a3c9c5fa59f336a687a1029a7fc8160e9777aa..064672576fdbc032566b8c8ec24ebde0b53db803 100644
+--- a/net/minecraft/server/level/PlayerSpawnFinder.java
++++ b/net/minecraft/server/level/PlayerSpawnFinder.java
+@@ -44,7 +44,7 @@ public class PlayerSpawnFinder {
+         long l = radius * 2L + 1L;
+         this.candidateCount = (int)Math.min(1024L, l * l);
+         this.coprime = getCoprime(this.candidateCount);
+-        this.offset = RandomSource.create().nextInt(this.candidateCount);
++        this.offset = level.random.nextInt(this.candidateCount); // Gale - Patina - reduce RandomSource instances
+     }
  
-             for (int i1 = 0; i1 < i; i1++) {
-                 int i2 = (randomInt + coprime * i1) % i;
+     public static CompletableFuture<Vec3> findSpawn(ServerLevel level, BlockPos pos) {
 diff --git a/net/minecraft/server/rcon/thread/QueryThreadGs4.java b/net/minecraft/server/rcon/thread/QueryThreadGs4.java
 index 0b8d279a53196f3998b1f6901738ca8e02ef7311..9add567d2ec2f5e9cd5bee84423c5a44433fe188 100644
 --- a/net/minecraft/server/rcon/thread/QueryThreadGs4.java
@@ -52,7 +52,7 @@ index 0b8d279a53196f3998b1f6901738ca8e02ef7311..9add567d2ec2f5e9cd5bee84423c5a44
          }
  
 diff --git a/net/minecraft/world/entity/projectile/FishingHook.java b/net/minecraft/world/entity/projectile/FishingHook.java
-index 5f3abbe943be394e9cb987945a238208940b5015..5b831ecd8f094bcae2ff50b96ccfc0d75b43a495 100644
+index 89767d2e8b2438db0f9bfe3504e637934725e995..7d310e21e226a0459e494e96baee2eed4a03f025 100644
 --- a/net/minecraft/world/entity/projectile/FishingHook.java
 +++ b/net/minecraft/world/entity/projectile/FishingHook.java
 @@ -51,7 +51,7 @@ import org.slf4j.Logger;
@@ -73,10 +73,10 @@ index 5f3abbe943be394e9cb987945a238208940b5015..5b831ecd8f094bcae2ff50b96ccfc0d7
  
      public FishingHook(EntityType<? extends FishingHook> entityType, Level level) {
 diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index afcf185c4e2c0648c96a872fbe1fbebb6012d513..aaa990b01e886812cc1dbad819e922b23d08889c 100644
+index dcfade2efe209b87a169738fc2ff23d8e24b53a6..7a1b00de908a495b8d5bf819bac937bcbba946e5 100644
 --- a/net/minecraft/world/entity/raid/Raid.java
 +++ b/net/minecraft/world/entity/raid/Raid.java
-@@ -121,7 +121,7 @@ public class Raid {
+@@ -123,7 +123,7 @@ public class Raid {
      public final ServerBossEvent raidEvent = new ServerBossEvent(RAID_NAME_COMPONENT, BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_10);
      private int postRaidTicks;
      private int raidCooldownTicks;
@@ -85,7 +85,7 @@ index afcf185c4e2c0648c96a872fbe1fbebb6012d513..aaa990b01e886812cc1dbad819e922b2
      public final int numGroups;
      private Raid.RaidStatus status;
      private int celebrationTicks;
-@@ -508,7 +508,7 @@ public class Raid {
+@@ -530,7 +530,7 @@ public class Raid {
          float f = 13.0F;
          int i = 64;
          Collection<ServerPlayer> players = this.raidEvent.getPlayers();
@@ -94,7 +94,7 @@ index afcf185c4e2c0648c96a872fbe1fbebb6012d513..aaa990b01e886812cc1dbad819e922b2
  
          for (ServerPlayer serverPlayer : level.players()) {
              Vec3 vec3 = serverPlayer.position();
-@@ -532,7 +532,7 @@ public class Raid {
+@@ -554,7 +554,7 @@ public class Raid {
  
          for (Raid.RaiderType raiderType : Raid.RaiderType.VALUES) {
              int i1 = this.getDefaultNumSpawns(raiderType, i, shouldSpawnBonusGroup)
@@ -104,7 +104,7 @@ index afcf185c4e2c0648c96a872fbe1fbebb6012d513..aaa990b01e886812cc1dbad819e922b2
  
              for (int i3 = 0; i3 < i1; i3++) {
 diff --git a/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java b/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
-index c8b577a5d5f059aed368fa082bc4518cc2dbd0b0..ac5ab4ae88c8188635f5784a10002a6cdcad49b6 100644
+index 150b30d0cb17ebd9517b89e14065de64d2609d41..11c8f959fd323254a4ae01838a641adfe3d51a3d 100644
 --- a/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
 @@ -248,7 +248,7 @@ public class TheEndGatewayBlockEntity extends TheEndPortalBlockEntity {

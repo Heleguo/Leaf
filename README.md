@@ -10,9 +10,9 @@
 </div>
 
 > [!WARNING]
-> Current Leaf 1.21.9 is a temp branch which is isolated from the 1.21.8 branch. \
+> Current Leaf 1.21.9 is a temp branch which is independent of the 1.21.8 branch. \
 > Update Paper upstream will be done every month, and will not receive fixes from Leaf 1.21.8, until Leaf 1.21.8 becomes stable again. \
-> It's only for people want to try or test 1.21.9, **DO NOT** use in production!
+> It's only for people who want to try or test 1.21.9, **DO NOT** use in production!
 
 **English** | [中文](public/readme/README_CN.md)
 

@@ -7,10 +7,10 @@ License: GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
 Gale - https://galemc.org
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f287641acb77cb384ff1f6d672e7622c7267ffe2..82e94ec6bc46e6968456debae643649e79f4614c 100644
+index 093ab2ab59a9994acb2793f35b26f54601879028..5808630e72500d5bebd1fd1748a3fd05d679b710 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3082,6 +3082,23 @@ public final class CraftServer implements Server {
+@@ -2860,6 +2860,23 @@ public final class CraftServer implements Server {
          };
      }
  

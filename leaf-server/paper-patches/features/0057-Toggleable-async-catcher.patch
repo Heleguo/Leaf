@@ -5,7 +5,7 @@ Subject: [PATCH] Toggleable async catcher
 
 
 diff --git a/src/main/java/org/spigotmc/AsyncCatcher.java b/src/main/java/org/spigotmc/AsyncCatcher.java
-index 7e7a0ed944961af5ab7a49bc659da2862d2e2c82..e584205c3e1412bf2f2c4e4eb114a29cebc73fad 100644
+index 7e7a0ed944961af5ab7a49bc659da2862d2e2c82..2522890b326c21434e10b90c774efbc8590117b3 100644
 --- a/src/main/java/org/spigotmc/AsyncCatcher.java
 +++ b/src/main/java/org/spigotmc/AsyncCatcher.java
 @@ -5,6 +5,7 @@ import net.minecraft.server.MinecraftServer;

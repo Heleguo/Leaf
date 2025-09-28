@@ -6,7 +6,7 @@ Subject: [PATCH] Paw optimization
 Some random optimizations
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
-index 5aeda80229b14053bfb8a71a937efb6793fa229d..471ae6dfd6acada34ce732a7154c403f3e739c62 100644
+index c87e026f015e9b28df4325468bc7454cdf2bcbf1..368ee7ea426bec781000f30eb754208b7d104d8c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
 @@ -244,13 +244,37 @@ public class CraftBlockData implements BlockData {

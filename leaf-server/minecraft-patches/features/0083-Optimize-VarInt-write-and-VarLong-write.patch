@@ -21,7 +21,7 @@ Given that we do a lot of varint writing as well, this should provide a small pe
 This includes a test to ensure that the behavior is as expected and fixes the initialization loop so that the correct results will be given. Much thanks to @octylFractal for acting as my duck while trying to figure this out.
 
 diff --git a/net/minecraft/network/VarInt.java b/net/minecraft/network/VarInt.java
-index 4897ff4648083ebe737ae5b32bae344af27357e4..6f8dd31582f0e1d3a71acc7a142c1f4ec0539d9e 100644
+index 7a1cafc3fb56054a72591bfb446a433f959a6b28..01d0aa1bcd5d64e9ad0a029678760cfc7e699846 100644
 --- a/net/minecraft/network/VarInt.java
 +++ b/net/minecraft/network/VarInt.java
 @@ -51,6 +51,41 @@ public class VarInt {

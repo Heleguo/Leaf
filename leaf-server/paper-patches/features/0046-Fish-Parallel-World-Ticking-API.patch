@@ -16,13 +16,13 @@ With this approach only new methods are added into already existing Bukkit API, 
   get standarized.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index dfafd3125438b6a74f15a749599acfd00918c50a..bcda5dd6fe3741518fea263b4790ea33bb9729cb 100644
+index 2a62cbd05fd41658b19a46ea2b5df483cdd33497..b78f6e56a993240fd2b329b64265c728631ca907 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3366,4 +3366,11 @@ public final class CraftServer implements Server {
-         return photographerManager;
+@@ -3134,4 +3134,11 @@ public final class CraftServer implements Server {
+         return MinecraftServer.lastTickOversleepTime;
      }
-     // Leaves end - replay mod api
+     // Gale end - YAPFA - last tick time - API
 +
 +    // Fish start - Parallel World Ticking API
 +    @Override
@@ -32,10 +32,10 @@ index dfafd3125438b6a74f15a749599acfd00918c50a..bcda5dd6fe3741518fea263b4790ea33
 +    // Fish end - Parallel World Ticking API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ee5f342995a335593932a497c2bafd36d34cecb2..a16390fc13e1baf3cffbcfec5cc410a72ed47367 100644
+index 01b8cf8474f4d80eca65bdb9f44f204110b10a1b..9df1110696fdd235b5664f8ddbf4a0ca74bd78e9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2556,4 +2556,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -2134,4 +2134,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          return POINTERS_SUPPLIER.view(this);
      }
      // Paper end

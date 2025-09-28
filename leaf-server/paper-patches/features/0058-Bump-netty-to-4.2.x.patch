@@ -5,7 +5,7 @@ Subject: [PATCH] Bump netty to 4.2.x
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 748bd9650da4a209743b7a5dde584b2e19c5a578..3e972dc2160f953daaa727c2305ec71eed7981a5 100644
+index 7e99752be20868606ab31b9db831c9940f970c9b..56aeb7cd25832616d58c93eeec586f88f4937014 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -21,6 +21,14 @@ public class Main {

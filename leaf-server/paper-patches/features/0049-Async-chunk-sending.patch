@@ -5,10 +5,10 @@ Subject: [PATCH] Async chunk sending
 
 
 diff --git a/src/main/java/io/papermc/paper/antixray/ChunkPacketBlockControllerAntiXray.java b/src/main/java/io/papermc/paper/antixray/ChunkPacketBlockControllerAntiXray.java
-index ca24f4cd7a50f0156d84e263c60f841cca95c669..e98a7edc4001d020d238a44a96fda00f389234eb 100644
+index 3f21d3f490985b7a905159b593c1ef4072f87e17..0d9e17b609929aa5ded4747b30601000cc63fd94 100644
 --- a/src/main/java/io/papermc/paper/antixray/ChunkPacketBlockControllerAntiXray.java
 +++ b/src/main/java/io/papermc/paper/antixray/ChunkPacketBlockControllerAntiXray.java
-@@ -185,7 +185,7 @@ public final class ChunkPacketBlockControllerAntiXray extends ChunkPacketBlockCo
+@@ -186,7 +186,7 @@ public final class ChunkPacketBlockControllerAntiXray extends ChunkPacketBlockCo
              return;
          }
  

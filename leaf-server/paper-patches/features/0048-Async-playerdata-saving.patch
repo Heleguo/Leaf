@@ -5,19 +5,10 @@ Subject: [PATCH] Async playerdata saving
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index f967560da343867fdc1c380a42874b0796633777..3b516f57854f6482b3748d0c3a037fdeacfe78ab 100644
+index cee3954179fd4a4d1ca3090a843c96676f9cc47b..15e27339f2c955c07878f13eeed51a6998f5a5bb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -200,7 +200,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
- 
-     private CompoundTag getData() {
-         // This method does not use the problem reporter
--        return this.storage.load(this.profile.getName(), this.profile.getId().toString(), ProblemReporter.DISCARDING).orElse(null);
-+        return this.storage.load(this.profile.getName(), this.profile.getId().toString(), this.profile.getId(), ProblemReporter.DISCARDING).orElse(null); // Leaf - Async playerdata saving
-     }
- 
-     private CompoundTag getBukkitData() {
-@@ -750,16 +750,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -747,16 +747,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
       * @param compoundTag
       */
      private void save(CompoundTag compoundTag) {
