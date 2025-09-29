@@ -28,10 +28,10 @@ index faacc8b73cb0a06c797abe461fbfacfebe95648f..a58dd6d8e69736163b7099d66b0ebcb1
          return this.chunkPosition;
      }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 39b3b17dd9cafa59393d40bf0090edeadacde428..3c972e39a66c1aa9253eaae818eab6feac94c66d 100644
+index 64ac6201d0f4ce90f68509bf372cacba6999a743..4d7bc1a2ef17582a89868b81e09ee9303b8b8927 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -2161,8 +2161,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -2160,8 +2160,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      public boolean onClimbableCached() {
          if (!this.blockPosition().equals(this.lastClimbingPosition)) {
@@ -51,7 +51,7 @@ index 39b3b17dd9cafa59393d40bf0090edeadacde428..3c972e39a66c1aa9253eaae818eab6fe
          }
  
          return this.cachedOnClimbable;
-@@ -2170,11 +2179,25 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -2169,11 +2178,25 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      // Gale end - Airplane - cache on climbable check
  
      public boolean onClimbable() {

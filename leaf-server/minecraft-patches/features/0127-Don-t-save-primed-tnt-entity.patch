@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: nostalfinals <yuu8583@proton.me>
+Date: Mon, 29 Apr 2024 23:30:21 +0800
+Subject: [PATCH] Don't save primed tnt entity
+
+
+diff --git a/net/minecraft/world/entity/item/PrimedTnt.java b/net/minecraft/world/entity/item/PrimedTnt.java
+index 730caed2ea1877d855bb0b8be8f3ca786ea4c3c3..9f3cc2a462472b303f29b652c89e64c7dbd04063 100644
+--- a/net/minecraft/world/entity/item/PrimedTnt.java
++++ b/net/minecraft/world/entity/item/PrimedTnt.java
+@@ -266,4 +266,11 @@ public class PrimedTnt extends Entity implements TraceableEntity {
+         return super.interact(player, hand);
+     }
+     // Purpur end - Shears can defuse TNT
++
++    // Leaf start - PMC - Don't save primed tnt entity
++    @Override
++    public boolean shouldBeSaved() {
++        return !org.dreeam.leaf.config.modules.opt.DontSaveEntity.dontSavePrimedTNT && super.shouldBeSaved();
++    }
++    // Leaf - PMC - Don't save primed tnt entity
+ }

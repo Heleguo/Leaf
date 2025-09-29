@@ -1383,7 +1383,7 @@ index 98773bf5a1ad39f405bf0f3bb92ea406813dde67..f871c40148fdb6b0798ea2e3291fc92b
          }
      }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c28bd7509 100644
+index fcc6eb1bdadbea20a373f43d0b6fc5ead0b6be40..c0644e6e6168619932885d2cff32f2bd6ac09734 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -70,8 +70,6 @@ import net.minecraft.tags.FluidTags;
@@ -1395,7 +1395,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
  import net.minecraft.world.Difficulty;
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.damagesource.CombatRules;
-@@ -436,8 +434,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -435,8 +433,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          }
  
          super.baseTick();
@@ -1404,7 +1404,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
          if (this.isAlive() && this.level() instanceof ServerLevel serverLevel1) {
              boolean flag = this instanceof Player;
              if (this.isInWall()) {
-@@ -518,7 +514,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -517,7 +513,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          this.yBodyRotO = this.yBodyRot;
          this.yRotO = this.getYRot();
          this.xRotO = this.getXRot();
@@ -1412,7 +1412,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
      }
  
      protected boolean shouldTakeDrowningDamage() {
-@@ -3317,11 +3312,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3316,11 +3311,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              f1 = this.getYRot();
          }
  
@@ -1424,7 +1424,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
  
          // Paper start - stop large pitch and yaw changes from crashing the server
          this.yRotO += Math.round((this.getYRot() - this.yRotO) / 360.0F) * 360.0F;
-@@ -3333,7 +3324,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3332,7 +3323,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          this.yHeadRotO += Math.round((this.yHeadRot - this.yHeadRotO) / 360.0F) * 360.0F;
          // Paper end - stop large pitch and yaw changes from crashing the server
  
@@ -1432,7 +1432,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
          if (this.isFallFlying()) {
              this.fallFlyTicks++;
          } else {
-@@ -3509,21 +3499,15 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3508,21 +3498,15 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          }
  
          this.setDeltaMovement(d, d1, d2);
@@ -1454,7 +1454,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
          if (this.jumping && this.isAffectedByFluids()) {
              double fluidHeight;
              if (this.isInLava()) {
-@@ -3552,8 +3536,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3551,8 +3535,6 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              this.noJumpDelay = 0;
          }
  
@@ -1463,7 +1463,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
          if (this.isFallFlying()) {
              this.updateFallFlying();
          }
-@@ -3578,9 +3560,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3577,9 +3559,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              this.calculateEntityAnimation(this instanceof FlyingAnimal);
          }
  
@@ -1473,7 +1473,7 @@ index 1a5ce901d6bcf6fdc476ea8bf64b1c5aac55a555..ca46c3a7ba5ffb6cd552cc1313db615c
              if ((!this.isInPowderSnow || !this.canFreeze()) && !this.freezeLocked) { // Paper - Freeze Tick Lock API
                  this.setTicksFrozen(Math.max(0, this.getTicksFrozen() - 2));
              }
-@@ -3590,18 +3570,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3589,18 +3569,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              if (this.tickCount % 40 == 0 && this.isFullyFrozen() && this.canFreeze()) {
                  this.hurtServer(serverLevel, this.damageSources().freeze(), 1.0F);
              }

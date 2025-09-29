@@ -1,0 +1,139 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: AlphaKR93 <dev@alpha93.kr>
+Date: Wed, 27 Sep 2023 18:29:51 +0900
+Subject: [PATCH] Plazma: Add some missing Pufferfish configurations
+
+Original license: MIT
+Original project: https://github.com/PlazmaMC/PlazmaBukkit
+
+Add Pufferfish DAB support for Camel, Sniffer
+https://github.com/pufferfish-gg/Pufferfish/issues/83
+
+diff --git a/net/minecraft/world/entity/animal/HappyGhast.java b/net/minecraft/world/entity/animal/HappyGhast.java
+index 7fae9853c117cda03c516afc1508493af460fa8a..0f73d9036c6edfc33767959d6bc473568a42369b 100644
+--- a/net/minecraft/world/entity/animal/HappyGhast.java
++++ b/net/minecraft/world/entity/animal/HappyGhast.java
+@@ -425,9 +425,11 @@ public class HappyGhast extends Animal {
+         return HappyGhastAi.makeBrain(this.brainProvider().makeBrain(dynamic));
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+         if (this.isBaby()) {
++            if (this.behaviorTick++ % this.activatedPriority == 0) // Leaf - Plazma - Add missing Pufferfish configurations
+             ((Brain<HappyGhast>)this.brain).tick(level, this);
+             HappyGhastAi.updateActivity(this);
+         }
+diff --git a/net/minecraft/world/entity/animal/armadillo/Armadillo.java b/net/minecraft/world/entity/animal/armadillo/Armadillo.java
+index 0d724ad5a8df9f96a21e2e2216aef4a3b87cd2ad..7b6d6395da302744eb7a11f5033f38b6d6f6b0e5 100644
+--- a/net/minecraft/world/entity/animal/armadillo/Armadillo.java
++++ b/net/minecraft/world/entity/animal/armadillo/Armadillo.java
+@@ -157,8 +157,10 @@ public class Armadillo extends Animal {
+         return ArmadilloAi.makeBrain(this.brainProvider().makeBrain(dynamic));
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
++        if (this.behaviorTick++ % this.activatedPriority == 0) // Leaf - Plazma - Add missing Pufferfish configurations
+         ((Brain<Armadillo>)this.brain).tick(level, this);
+         ArmadilloAi.updateActivity(this);
+         if (this.isAlive() && !this.isBaby() && --this.scuteTime <= 0) {
+diff --git a/net/minecraft/world/entity/animal/camel/Camel.java b/net/minecraft/world/entity/animal/camel/Camel.java
+index 5a436ae8893cd91944e8269f11c29bc82217c755..98d6411b92ee8923e7a52a008c3e79d4ca87c47e 100644
+--- a/net/minecraft/world/entity/animal/camel/Camel.java
++++ b/net/minecraft/world/entity/animal/camel/Camel.java
+@@ -168,9 +168,11 @@ public class Camel extends AbstractHorse {
+         return pose == Pose.SITTING ? SITTING_DIMENSIONS.scale(this.getAgeScale()) : super.getDefaultDimensions(pose);
+     }
+ 
++    private int behaviorTick = 0; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+         Brain<?> brain = this.getBrain();
++        if (this.behaviorTick++ % this.activatedPriority == 0) // Leaf - Plazma - Add missing Pufferfish configurations
+         ((Brain<Camel>)brain).tick(level, this);
+         CamelAi.updateActivity(this);
+         super.customServerAiStep(level);
+diff --git a/net/minecraft/world/entity/animal/coppergolem/CopperGolem.java b/net/minecraft/world/entity/animal/coppergolem/CopperGolem.java
+index 292c9a82028503566c8d3b50b87d09f79619aa7d..80b10da7151929878eb1790eb9fd8b6b55a46034 100644
+--- a/net/minecraft/world/entity/animal/coppergolem/CopperGolem.java
++++ b/net/minecraft/world/entity/animal/coppergolem/CopperGolem.java
+@@ -181,11 +181,12 @@ public class CopperGolem extends AbstractGolem implements ContainerUser, Shearab
+         this.setWeatherState(input.read("weather_state", WeatheringCopper.WeatherState.CODEC).orElse(WeatheringCopper.WeatherState.UNAFFECTED));
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+         ProfilerFiller profilerFiller = Profiler.get();
+         profilerFiller.push("copperGolemBrain");
+-        if (getRider() == null || !this.isControllable()) // Purpur - only use brain if no rider
++        if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Purpur - only use brain if no rider // Leaf - Plazma - Add missing Pufferfish configurations
+         this.getBrain().tick(level, this);
+         profilerFiller.pop();
+         profilerFiller.push("copperGolemActivityUpdate");
+diff --git a/net/minecraft/world/entity/animal/sniffer/Sniffer.java b/net/minecraft/world/entity/animal/sniffer/Sniffer.java
+index b77b763a3eb58b3135ad9c9cbb8a39f67393397d..e5249022054abfa441b8f951db501a9cd1f5613f 100644
+--- a/net/minecraft/world/entity/animal/sniffer/Sniffer.java
++++ b/net/minecraft/world/entity/animal/sniffer/Sniffer.java
+@@ -492,9 +492,10 @@ public class Sniffer extends Animal {
+         return Brain.provider(SnifferAi.MEMORY_TYPES, SnifferAi.SENSOR_TYPES);
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+-        if (getRider() == null || !this.isControllable()) // Purpur - only use brain if no rider
++        if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Purpur - only use brain if no rider // Leaf - Plazma - Add missing Pufferfish configurations
+         this.getBrain().tick(level, this);
+         SnifferAi.updateActivity(this);
+         super.customServerAiStep(level);
+diff --git a/net/minecraft/world/entity/monster/Zoglin.java b/net/minecraft/world/entity/monster/Zoglin.java
+index 2eb7f602f452917b5d88fd8237898dff920cf0a9..39a17658ed6681e72ba9c6083347183649a816f5 100644
+--- a/net/minecraft/world/entity/monster/Zoglin.java
++++ b/net/minecraft/world/entity/monster/Zoglin.java
+@@ -284,9 +284,10 @@ public class Zoglin extends Monster implements HoglinBase {
+         this.setAggressive(this.brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET));
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+-        if (getRider() == null || !this.isControllable()) // Purpur - only use brain if no rider
++        if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Purpur - only use brain if no rider // Leaf - Plazma - Add missing Pufferfish configurations
+         this.getBrain().tick(level, this);
+         this.updateActivity();
+     }
+diff --git a/net/minecraft/world/entity/monster/breeze/Breeze.java b/net/minecraft/world/entity/monster/breeze/Breeze.java
+index 44d638d5d96a58bcfd35cc8e2e0c08389717e48f..06b65dc3784de194f99532bdb85dbfc930a72ae2 100644
+--- a/net/minecraft/world/entity/monster/breeze/Breeze.java
++++ b/net/minecraft/world/entity/monster/breeze/Breeze.java
+@@ -230,9 +230,10 @@ public class Breeze extends Monster {
+         return pos.closerThan(center, 4.0, 10.0);
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
+-        if (getRider() == null || !this.isControllable()) // Purpur - only use brain if no rider
++        if ((getRider() == null || !this.isControllable()) && this.behaviorTick++ % this.activatedPriority == 0) // Purpur - only use brain if no rider // Leaf - Plazma - Add missing Pufferfish configurations
+         this.getBrain().tick(level, this);
+         BreezeAi.updateActivity(this);
+         super.customServerAiStep(level);
+diff --git a/net/minecraft/world/entity/monster/creaking/Creaking.java b/net/minecraft/world/entity/monster/creaking/Creaking.java
+index ffa881eb837aff53d50d0ffe8af44bbe2d0aeb6a..a4216d5febb2b432306e9f4de56f8f49d61cbb5e 100644
+--- a/net/minecraft/world/entity/monster/creaking/Creaking.java
++++ b/net/minecraft/world/entity/monster/creaking/Creaking.java
+@@ -231,8 +231,10 @@ public class Creaking extends Monster {
+         return (Brain<Creaking>)super.getBrain();
+     }
+ 
++    private int behaviorTick; // Leaf - Plazma - Add missing Pufferfish configurations
+     @Override
+     protected void customServerAiStep(ServerLevel level) {
++        if (this.behaviorTick++ % this.activatedPriority == 0) // Leaf - Plazma - Add missing Pufferfish configurations
+         this.getBrain().tick((ServerLevel)this.level(), this);
+         CreakingAi.updateActivity(this);
+     }

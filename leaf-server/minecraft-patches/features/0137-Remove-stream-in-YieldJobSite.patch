@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: HaHaWTH <102713261+HaHaWTH@users.noreply.github.com>
+Date: Sat, 26 Oct 2024 14:04:54 +0800
+Subject: [PATCH] Remove stream in YieldJobSite
+
+
+diff --git a/net/minecraft/world/entity/ai/behavior/YieldJobSite.java b/net/minecraft/world/entity/ai/behavior/YieldJobSite.java
+index 22547468e407dbc7aa64deddbdcf0ae39ca810c2..bcabd994d562066398a164064cd7568d77122d13 100644
+--- a/net/minecraft/world/entity/ai/behavior/YieldJobSite.java
++++ b/net/minecraft/world/entity/ai/behavior/YieldJobSite.java
+@@ -34,28 +34,29 @@ public class YieldJobSite {
+                         } else {
+                             BlockPos blockPos = instance.<GlobalPos>get(potentialJobSite).pos();
+                             Optional<Holder<PoiType>> type = level.getPoiManager().getType(blockPos);
+-                            if (type.isEmpty()) {
+-                                return true;
+-                            } else {
+-                                instance.<List<LivingEntity>>get(nearestLivingEntities)
+-                                    .stream()
+-                                    .filter(nearEntity -> nearEntity instanceof Villager && nearEntity != villager)
+-                                    .map(nearEntity -> (Villager)nearEntity)
+-                                    .filter(LivingEntity::isAlive)
+-                                    .filter(nearVillager -> nearbyWantsJobsite(type.get(), nearVillager, blockPos))
+-                                    .findFirst()
+-                                    .ifPresent(nearVillager -> {
+-                                        walkTarget.erase();
+-                                        lookTarget.erase();
+-                                        potentialJobSite.erase();
+-                                        if (nearVillager.getBrain().getMemory(MemoryModuleType.JOB_SITE).isEmpty()) {
+-                                            BehaviorUtils.setWalkAndLookTargetMemories(nearVillager, blockPos, speedModifier, 1);
+-                                            nearVillager.getBrain().setMemory(MemoryModuleType.POTENTIAL_JOB_SITE, GlobalPos.of(level.dimension(), blockPos));
+-                                            level.debugSynchronizers().updatePoi(blockPos);
++                            // Leaf start - Remove stream in YieldJobSite
++                            if (type.isPresent()) {
++                                List<LivingEntity> mobsList = instance.get(nearestLivingEntities);
++                                for (LivingEntity nearEntity : mobsList) {
++                                    if (nearEntity instanceof Villager nearVillager && nearEntity != villager && nearEntity.isAlive()) {
++                                        if (nearbyWantsJobsite(type.get(), nearVillager, blockPos)) {
++                                            walkTarget.erase();
++                                            lookTarget.erase();
++                                            potentialJobSite.erase();
++
++                                            if (nearVillager.getBrain().getMemory(MemoryModuleType.JOB_SITE).isEmpty()) {
++                                                BehaviorUtils.setWalkAndLookTargetMemories(nearVillager, blockPos, speedModifier, 1);
++                                                nearVillager.getBrain().setMemory(MemoryModuleType.POTENTIAL_JOB_SITE, GlobalPos.of(level.dimension(), blockPos));
++                                                level.debugSynchronizers().updatePoi(blockPos);
++                                            }
++
++                                            break;
+                                         }
+-                                    });
+-                                return true;
++                                    }
++                                }
++                                // Leaf end - Remove stream in YieldJobSite
+                             }
++                            return true;
+                         }
+                     }
+                 )

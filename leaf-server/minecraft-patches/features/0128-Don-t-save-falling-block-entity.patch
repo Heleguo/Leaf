@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: nostalfinals <yuu8583@proton.me>
+Date: Mon, 29 Apr 2024 23:31:25 +0800
+Subject: [PATCH] Don't save falling block entity
+
+
+diff --git a/net/minecraft/world/entity/item/FallingBlockEntity.java b/net/minecraft/world/entity/item/FallingBlockEntity.java
+index 308af61031070d57556532645f73b41517d696e9..83b23d93b1b462d24adae135441eb3ead6f6aef0 100644
+--- a/net/minecraft/world/entity/item/FallingBlockEntity.java
++++ b/net/minecraft/world/entity/item/FallingBlockEntity.java
+@@ -389,4 +389,11 @@ public class FallingBlockEntity extends Entity {
+         this.forceTickAfterTeleportToDuplicate = entity != null && flag && io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings.allowUnsafeEndPortalTeleportation; // Paper
+         return entity;
+     }
++
++    // Leaf start - PMC - Don't save falling block entity
++    @Override
++    public boolean shouldBeSaved() {
++        return !org.dreeam.leaf.config.modules.opt.DontSaveEntity.dontSaveFallingBlock && super.shouldBeSaved();
++    }
++    // Leaf end - PMC - Don't save falling block entity
+ }

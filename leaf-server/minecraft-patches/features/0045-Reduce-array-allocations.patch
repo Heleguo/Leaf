@@ -289,10 +289,10 @@ index b383836c200ca9f7bd84639367aa81b57868fb25..3af4a6dcc81afaf2860325fe5852c9a9
  
      private static Map<EquipmentSlot, Float> createForAllSlots(List<EquipmentSlot> equipmentSlots, float dropChance) {
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 6bd80817991a0f21d650c89e24193e4c4f98769e..c4bda5d975cce38a725b8590261d97fcfac3d95d 100644
+index 513c00274b45706d3fc90b5d045159e83cc644e6..85f9e78eec69295a4680d4210b20a915b678b7c6 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3390,7 +3390,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3389,7 +3389,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          Map<org.bukkit.inventory.EquipmentSlot, io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange> equipmentChanges = null;
          // Paper end - EntityEquipmentChangedEvent
  
@@ -301,7 +301,7 @@ index 6bd80817991a0f21d650c89e24193e4c4f98769e..c4bda5d975cce38a725b8590261d97fc
              ItemStack itemStack = this.lastEquipmentItems.get(equipmentSlot);
              ItemStack itemBySlot = this.getItemBySlot(equipmentSlot);
              if (this.equipmentHasChanged(itemStack, itemBySlot)) {
-@@ -3662,7 +3662,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3661,7 +3661,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      public boolean canGlide() {
          if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {

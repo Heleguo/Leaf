@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: pixelNightly <pixelnightly@proton.me>
+Date: Mon, 4 Dec 2023 16:11:36 +0200
+Subject: [PATCH] Fix sprint glitch
+
+
+diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
+index 49b70d4faa6ad188d04dda696ca27eef0eed09a2..f4cdbbf283db4d28821cffc6e985b5c70f10352d 100644
+--- a/net/minecraft/world/entity/LivingEntity.java
++++ b/net/minecraft/world/entity/LivingEntity.java
+@@ -1425,7 +1425,8 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+                 player.setRealHealth(health);
+             }
+ 
+-            player.updateScaledHealth(false);
++            //player.updateScaledHealth(false); // Leaf - Fix sprint glitch - commented out
++            this.entityData.set(LivingEntity.DATA_HEALTH_ID, player.getScaledHealth()); // Leaf - Fix sprint glitch
+             return;
+         }
+         // CraftBukkit end

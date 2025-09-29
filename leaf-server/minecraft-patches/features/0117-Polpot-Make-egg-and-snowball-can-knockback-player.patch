@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lilingfengdev <145678359+lilingfengdev@users.noreply.github.com>
+Date: Thu, 18 Jan 2024 13:30:02 +0800
+Subject: [PATCH] Polpot: Make egg and snowball can knockback player
+
+Original project: https://github.com/HaHaWTH/Polpot
+
+Added knockback for snowball and egg.
+Set hurtMarked to true to be able to send velocity changes
+under Entity#sendChanges via ClientboundSetEntityMotionPacket
+
+diff --git a/net/minecraft/world/entity/projectile/Snowball.java b/net/minecraft/world/entity/projectile/Snowball.java
+index 49694d7fe529fb8197ab4a3a7412d6923ee1bda7..cfa78ed95fd553a5f8cfa3872c8b261572398e9b 100644
+--- a/net/minecraft/world/entity/projectile/Snowball.java
++++ b/net/minecraft/world/entity/projectile/Snowball.java
+@@ -54,6 +54,12 @@ public class Snowball extends ThrowableItemProjectile {
+         Entity entity = result.getEntity();
+         int i = entity.level().purpurConfig.snowballDamage >= 0 ? entity.level().purpurConfig.snowballDamage : entity instanceof Blaze ? 3 : 0; // Purpur - Add configurable snowball damage
+         entity.hurt(this.damageSources().thrown(this, this.getOwner()), i);
++        // Leaf start - Polpot - Make snowball can knockback player
++        if (org.dreeam.leaf.config.modules.gameplay.Knockback.snowballCanKnockback && entity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
++            serverPlayer.knockback(0.4F, this.getX() - entity.getX(), this.getZ() - entity.getZ());
++            serverPlayer.markHurt();
++        }
++        // Leaf end - Polpot - Make snowball can knockback player
+     }
+ 
+     // Purpur start - options to extinguish fire blocks with snowballs - borrowed and modified code from ThrownPotion#onHitBlock and ThrownPotion#dowseFire
+diff --git a/net/minecraft/world/entity/projectile/ThrownEgg.java b/net/minecraft/world/entity/projectile/ThrownEgg.java
+index 57cb5b73dae86379be857ffa0f55ef7a056a0b4a..0b6aaabf20bd9c3c2490c9c2d5da420d1de4c78d 100644
+--- a/net/minecraft/world/entity/projectile/ThrownEgg.java
++++ b/net/minecraft/world/entity/projectile/ThrownEgg.java
+@@ -54,7 +54,14 @@ public class ThrownEgg extends ThrowableItemProjectile {
+     @Override
+     protected void onHitEntity(EntityHitResult result) {
+         super.onHitEntity(result);
+-        result.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 0.0F);
++        // Leaf start - Polpot - Make egg can knockback player
++        net.minecraft.world.entity.Entity entity = result.getEntity();
++        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0F);
++        if (org.dreeam.leaf.config.modules.gameplay.Knockback.eggCanKnockback && entity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
++            serverPlayer.knockback(0.4F, this.getX() - entity.getX(), this.getZ() - entity.getZ());
++            serverPlayer.markHurt();
++        }
++        // Leaf end - Polpot - Make egg can knockback player
+     }
+ 
+     @Override
