@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mclk623 <mclk623@163.com>
+Date: Thu, 1 Jan 2026 14:05:54 +0000
+Subject: [PATCH] Leaves config api
+
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index a1318ed9f8c321bff24de55a719a54ec80b13422..ff5cfb060c6ea9f30eb6a6cbb771c466bf4a6260 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -3083,6 +3083,12 @@ public final class Bukkit {
+         server.restart();
+     }
+ 
++    // Leaves start - Config API
++    public static org.leavesmc.leaves.config.LeavesConfigProvider getLeavesConfig() {
++        return server.getLeavesConfig();
++    }
++    // Leaves end - Config API
++
+     // Purpur start - Bring back server name
+     /**
+      * Get the name of this server
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 34923c76219e427ebe071d747100d7fa01ef1615..ca363d119afeffbca3ead4b5c2240b573d559b4a 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -2794,6 +2794,10 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+     void allowPausing(@NotNull org.bukkit.plugin.Plugin plugin, boolean value);
+     // Paper end - API to check if the server is sleeping
+ 
++    // Leaves start - Config API
++    org.leavesmc.leaves.config.LeavesConfigProvider getLeavesConfig();
++    // Leaves End - Config API
++
+     // Purpur start - Bring back server name
+     /**
+      * Get the name of this server
