@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mclk623 <mclk623@163.com>
+Date: Thu, 1 Jan 2026 16:08:01 +0000
+Subject: [PATCH] Leaves Config API
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 7a5bda878ff77d20a9ea11e8ac879cebcec2f63d..1bfc9bc0f1e5ecae8443f91a2ba7e2a4858cc94a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -3375,4 +3375,11 @@ public final class CraftServer implements Server {
+         return org.dreeam.leaf.config.modules.async.SparklyPaperParallelWorldTicking.enabled;
+     }
+     // Fish end - Parallel World Ticking API
++
++    // Leaves start - Config API
++    @Override
++    public org.leavesmc.leaves.config.LeavesConfigProvider getLeavesConfig() {
++        return org.leavesmc.leaves.config.InternalConfigProvider.INSTANCE;
++    }
++    // Leaves end - Config API
+ }
