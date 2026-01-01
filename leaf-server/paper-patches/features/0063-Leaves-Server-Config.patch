@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mclk623 <mclk623@163.com>
+Date: Thu, 1 Jan 2026 16:53:53 +0000
+Subject: [PATCH] Leaves Server Config
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 748bd9650da4a209743b7a5dde584b2e19c5a578..4072acd9895e962eb4e43426ee3cb6771482a49d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -177,6 +177,14 @@ public class Main {
+                         .ofType(String.class)
+                         .defaultsTo("Unknown Server")
+                         .describedAs("Name");
++
++                // Leaves start - Server Config
++                acceptsAll(asList("leaves", "leaves-settings"), "File for leaves settings")
++                        .withRequiredArg()
++                        .ofType(File.class)
++                        .defaultsTo(new File("leaves.yml"))
++                        .describedAs("Yml file");
++                // Leaves end - Server Config
+             }
+         };
+ 
