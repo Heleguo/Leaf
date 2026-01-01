@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mclk623 <mclk623@163.com>
+Date: Thu, 1 Jan 2026 14:55:49 +0000
+Subject: [PATCH] Leaves Servux Protocol
+
+
+diff --git a/net/minecraft/server/ServerTickRateManager.java b/net/minecraft/server/ServerTickRateManager.java
+index 40338efd1c0e56d869d03f1d0687e7ff0fcbf11a..c0504614b9239a69f2a6a49d964a97647469c1e4 100644
+--- a/net/minecraft/server/ServerTickRateManager.java
++++ b/net/minecraft/server/ServerTickRateManager.java
+@@ -128,4 +128,10 @@ public class ServerTickRateManager extends TickRateManager {
+         player.connection.send(ClientboundTickingStatePacket.from(this));
+         player.connection.send(ClientboundTickingStepPacket.from(this));
+     }
++
++    // Leaves start - servux
++    public long getRemainingSprintTicks() {
++        return remainingSprintTicks;
++    }
++    // Leaves end - servux
+ }
+diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
+index 01f7390f3fb2a423cec373a2bb5ccbee57278783..55199c5a8fdc9c97244dde2fde293c68068dccc0 100644
+--- a/net/minecraft/server/level/ServerLevel.java
++++ b/net/minecraft/server/level/ServerLevel.java
+@@ -2484,6 +2484,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+         }
+ 
+         this.lastSpawnChunkRadius = i;
++        org.leavesmc.leaves.protocol.servux.ServuxHudDataProtocol.refreshSpawnMetadata = true; // Leaves - servux
+     }
+ 
+     public LongSet getForceLoadedChunks() {
