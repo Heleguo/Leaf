@@ -153,6 +153,33 @@ public final class LeavesConfig {
         }
 
 
+        public PCAConfig pca = new PCAConfig();
+
+        @GlobalConfigCategory("pca")
+        public static class PCAConfig {
+            @TransferConfig("protocol.pca-sync-protocol")
+            @GlobalConfig(value = "pca-sync-protocol", validator = PcaValidator.class)
+            public boolean enable = false;
+
+            public static class PcaValidator extends BooleanConfigValidator {
+                @Override
+                public void verify(Boolean old, Boolean value) throws IllegalArgumentException {
+                    if (old != null && old != value) {
+                        PcaSyncProtocol.onConfigModify(value);
+                    }
+                }
+            }
+
+            @TransferConfig("protocol.pca-sync-player-entity")
+            @GlobalConfig(value = "pca-sync-player-entity")
+            public PcaPlayerEntityType syncPlayerEntity = PcaPlayerEntityType.OPS;
+
+            public enum PcaPlayerEntityType {
+                NOBODY, OPS, OPS_AND_SELF, EVERYONE
+            }
+        }
+
+
         public ServuxConfig servux = new ServuxConfig();
 
         @GlobalConfigCategory("servux")
@@ -217,29 +244,6 @@ public final class LeavesConfig {
             }
         }
 
-        @GlobalConfigCategory("pca")
-        public static class PCAConfig {
-            @TransferConfig("protocol.pca-sync-protocol")
-            @GlobalConfig(value = "pca-sync-protocol", validator = PcaValidator.class)
-            public boolean enable = false;
-
-            public static class PcaValidator extends BooleanConfigValidator {
-                @Override
-                public void verify(Boolean old, Boolean value) throws IllegalArgumentException {
-                    if (old != null && old != value) {
-                        PcaSyncProtocol.onConfigModify(value);
-                    }
-                }
-            }
-
-            @TransferConfig("protocol.pca-sync-player-entity")
-            @GlobalConfig(value = "pca-sync-player-entity")
-            public PcaPlayerEntityType syncPlayerEntity = PcaPlayerEntityType.OPS;
-
-            public enum PcaPlayerEntityType {
-                NOBODY, OPS, OPS_AND_SELF, EVERYONE
-            }
-        }
 
         @GlobalConfig(value = "alternative-block-placement", validator = AlternativePlaceValidator.class)
         public AlternativePlaceType alternativeBlockPlacement = AlternativePlaceType.NONE;
@@ -247,7 +251,6 @@ public final class LeavesConfig {
         public enum AlternativePlaceType {
             NONE, CARPET, CARPET_FIX, LITEMATICA
         }
-
 
         @GlobalConfig("leaves-carpet-support")
         public boolean leavesCarpetSupport = false;
