@@ -33,9 +33,15 @@ jobs:
       - name: Create MojmapPaperclipJar
         run: ./gradlew -Dorg.gradle.jvmargs="${{ env.GRAALVM_ARGS }}" createMojmapPaperclipJar --stacktrace --no-daemon
 
+      - name: Prepare release notes and artifacts
+        run: |
+          chmod +x ./scripts/prepareRelease.sh
+          ./scripts/prepareRelease.sh
+          
       - name: Upload Leaf
         uses: actions/upload-artifact@v6
         with:
           name: Leaf 1.21.8
           path: ./leaf-1.21.8-${{ env.BUILD_NUMBER }}.jar
+
 
