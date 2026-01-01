@@ -252,6 +252,16 @@ public final class LeavesConfig {
             NONE, CARPET, CARPET_FIX, LITEMATICA
         }
 
+        private static class AlternativePlaceValidator extends EnumConfigValidator<AlternativePlaceType> {
+            @Override
+            public void verify(AlternativePlaceType old, AlternativePlaceType value) throws IllegalArgumentException {
+            }
+
+            @Override
+            public void runAfterLoader(AlternativePlaceType value, boolean reload) {
+            }
+        }
+		
         @GlobalConfig("leaves-carpet-support")
         public boolean leavesCarpetSupport = false;
 
