@@ -38,5 +38,4 @@ jobs:
         with:
           name: Leaf 1.21.8
           path: ./leaf-1.21.8-${{ env.BUILD_NUMBER }}.jar
-e
 
