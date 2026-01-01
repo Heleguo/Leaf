@@ -248,21 +248,6 @@ public final class LeavesConfig {
             NONE, CARPET, CARPET_FIX, LITEMATICA
         }
 
-        private static class AlternativePlaceValidator extends EnumConfigValidator<AlternativePlaceType> {
-            @Override
-            public void verify(AlternativePlaceType old, AlternativePlaceType value) throws IllegalArgumentException {
-                if (value != AlternativePlaceType.NONE) {
-                    LeavesConfig.modify.disableDistanceCheckForUseItem = true;
-                }
-            }
-
-            @Override
-            public void runAfterLoader(AlternativePlaceType value, boolean reload) {
-                if (value != AlternativePlaceType.NONE) {
-                    LeavesConfig.modify.disableDistanceCheckForUseItem = true;
-                }
-            }
-        }
 
         @GlobalConfig("leaves-carpet-support")
         public boolean leavesCarpetSupport = false;
