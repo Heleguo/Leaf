@@ -29,10 +29,10 @@ import org.leavesmc.leaves.config.api.impl.ConfigValidatorImpl.LongConfigValidat
 import org.leavesmc.leaves.config.api.impl.ConfigValidatorImpl.StringConfigValidator;
 import org.leavesmc.leaves.protocol.CarpetServerProtocol.CarpetRule;
 import org.leavesmc.leaves.protocol.CarpetServerProtocol.CarpetRules;
+import org.leavesmc.leaves.protocol.PcaSyncProtocol;
 import org.leavesmc.leaves.protocol.bladeren.BladerenProtocol.LeavesFeature;
 import org.leavesmc.leaves.protocol.bladeren.BladerenProtocol.LeavesFeatureSet;
 import org.leavesmc.leaves.protocol.servux.logger.DataLogger;
-import org.leavesmc.leaves.protocol.syncmatica.SyncmaticaProtocol;
 
 import java.io.File;
 import java.io.IOException;
