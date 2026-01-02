@@ -98,18 +98,6 @@ public class LeavesProtocolManager {
                 return;
             }
 
-            // Leaf start - optimize leaves protocol manager
-            boolean active = true;
-            try {
-                Method isActiveMethod = clazz.getDeclaredMethod("isActive");
-                isActiveMethod.setAccessible(true);
-                active = (Boolean) isActiveMethod.invoke(protocol);
-            } catch (Throwable e) {
-                LOGGER.warning("Failed to check isActive for " + clazz.getName() + ": " + e);
-                continue;
-            }
-            // Leaf end - optimize leaves protocol manager
-
             for (final Method method : clazz.getDeclaredMethods()) {
                 if (method.isBridge() || method.isSynthetic()) {
                     continue;
@@ -126,22 +114,6 @@ public class LeavesProtocolManager {
                     }
                     continue;
                 }
-
-                if (!active) continue; // Leaf - optimize leaves protocol manager
-
-                // Leaf start - optimize leaves protocol manager - move up
-                final ProtocolHandler.ReloadServer reloadServer = method.getAnnotation(ProtocolHandler.ReloadServer.class);
-                if (reloadServer != null) {
-                    RELOAD_SERVER.add(new EmptyInvokerHolder<>(protocol, method, reloadServer));
-                    continue;
-                }
-
-                final ProtocolHandler.ReloadDataPack reloadDataPack = method.getAnnotation(ProtocolHandler.ReloadDataPack.class);
-                if (reloadDataPack != null) {
-                    RELOAD_DATAPACK.add(new EmptyInvokerHolder<>(protocol, method, reloadDataPack));
-                    continue;
-                }
-                // Leaf end - optimize leaves protocol manager - move up
 
                 final ProtocolHandler.PayloadReceiver payloadReceiver = method.getAnnotation(ProtocolHandler.PayloadReceiver.class);
                 if (payloadReceiver != null) {
@@ -184,6 +156,18 @@ public class LeavesProtocolManager {
                 final ProtocolHandler.PlayerLeave playerLeave = method.getAnnotation(ProtocolHandler.PlayerLeave.class);
                 if (playerLeave != null) {
                     PLAYER_LEAVE.add(new PlayerInvokerHolder<>(protocol, method, playerLeave));
+                    continue;
+                }
+
+                final ProtocolHandler.ReloadServer reloadServer = method.getAnnotation(ProtocolHandler.ReloadServer.class);
+                if (reloadServer != null) {
+                    RELOAD_SERVER.add(new EmptyInvokerHolder<>(protocol, method, reloadServer));
+                    continue;
+                }
+
+                final ProtocolHandler.ReloadDataPack reloadDataPack = method.getAnnotation(ProtocolHandler.ReloadDataPack.class);
+                if (reloadDataPack != null) {
+                    RELOAD_DATAPACK.add(new EmptyInvokerHolder<>(protocol, method, reloadDataPack));
                     continue;
                 }
 
@@ -315,11 +299,16 @@ public class LeavesProtocolManager {
 
     private static void sendKnownId(ServerPlayer player) {
         Set<String> set = new HashSet<>();
-        // Leaf start - optimize leaves protocol manager
-        PAYLOAD_RECEIVERS.forEach((clazz, holder) -> set.add(IDS.get(clazz).toString()));
-        STRICT_BYTEBUF_RECEIVERS.forEach((key, holder) -> set.add(key));
-        if (set.isEmpty()) return;
-        // Leaf end - optimize leaves protocol manager
+        PAYLOAD_RECEIVERS.forEach((clazz, holder) -> {
+            if (holder.owner().isActive()) {
+                set.add(IDS.get(clazz).toString());
+            }
+        });
+        STRICT_BYTEBUF_RECEIVERS.forEach((key, holder) -> {
+            if (holder.owner().isActive()) {
+                set.add(key);
+            }
+        });
         ProtocolUtils.sendBytebufPacket(player, ResourceLocation.fromNamespaceAndPath("minecraft", "register"), buf -> {
             for (String channel : set) {
                 buf.writeBytes(channel.getBytes(StandardCharsets.US_ASCII));
